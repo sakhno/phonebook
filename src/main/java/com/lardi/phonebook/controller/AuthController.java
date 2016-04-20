@@ -51,7 +51,7 @@ public class AuthController {
         Map<String, String> result = null;
         try {
             User user = parseUserFromRequest(parameters);
-            result = validationService.verifyNewUser(user, parameters.get("passwordconfirmation"));
+            result = validationService.verifyUser(user, parameters.get("passwordconfirmation"));
             if (result.isEmpty()) {
                 userService.save(user);
             }

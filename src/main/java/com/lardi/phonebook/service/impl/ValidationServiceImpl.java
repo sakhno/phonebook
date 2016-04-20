@@ -54,8 +54,8 @@ public class ValidationServiceImpl implements ValidationService {
         } else if (!validate(MOBILE_PATTERN, contact.getMobilePhone())) {
             result.put("mobilephone", MOBILE_PHONE_FORMAT);
         }
-
-        if (!"".equals(contact.getHomePhone()) && !validate(MOBILE_PATTERN, contact.getHomePhone())) {
+        if (contact.getHomePhone() != null && !"".equals(contact.getHomePhone())
+                && !validate(MOBILE_PATTERN, contact.getHomePhone())) {
             result.put("homephone", MOBILE_PHONE_FORMAT);
         }
         if (!"".equals(contact.getEmail()) && !validate(EMAIL_PATTERN, contact.getEmail())) {
@@ -65,7 +65,7 @@ public class ValidationServiceImpl implements ValidationService {
     }
 
     @Override
-    public Map<String, String> verifyNewUser(User user, String passwordConfirmation) throws PersistenceException {
+    public Map<String, String> verifyUser(User user, String passwordConfirmation) throws PersistenceException {
         Map<String, String> result = new HashMap<>();
         if (user.getName().length() < 5) {
             result.put("name", LESS_THEN_5);

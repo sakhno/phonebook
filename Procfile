@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar -Dspring.profiles.active=heroku target/phonebook-0.0.1-SNAPSHOT.war
+web: java -Dserver.port=$PORT -jar -Dspring.profiles.active=default target/phonebook-0.0.1-SNAPSHOT.war

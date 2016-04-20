@@ -31,4 +31,5 @@ public class TestConfig {
     public ValidationService validationService() {
         return Mockito.mock(ValidationService.class);
     }
+
 }

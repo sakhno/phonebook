@@ -60,7 +60,7 @@ public class AuthControllerTest {
 
     @Test
     public void registrationTest() throws Exception {
-        when(validationServiceMock.verifyNewUser(user, USER_PASSWORD)).thenReturn(new HashMap<>());
+        when(validationServiceMock.verifyUser(user, USER_PASSWORD)).thenReturn(new HashMap<>());
         when(userServiceMock.save(user)).thenReturn(user);
 
         mockMvc.perform(post("/registration")
@@ -70,7 +70,7 @@ public class AuthControllerTest {
                 .param("passwordconfirmation", USER_PASSWORD))
                 .andExpect(status().isOk());
 
-        verify(validationServiceMock, times(1)).verifyNewUser(user, USER_PASSWORD);
+        verify(validationServiceMock, times(1)).verifyUser(user, USER_PASSWORD);
         verify(userServiceMock, times(1)).save(user);
     }
 

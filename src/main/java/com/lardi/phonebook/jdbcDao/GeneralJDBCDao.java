@@ -21,13 +21,13 @@ public class GeneralJDBCDao extends JdbcDaoSupport {
         setDataSource(dataSource);
     }
 
-    protected Long parseLongFromHolder(KeyHolder holder){
+    protected Long parseLongFromHolder(KeyHolder holder) {
         Long id;
         Object tmp = holder.getKeys().get(GENERATED_KEY_NAME);
-        if(tmp instanceof Long){
-            id = (Long)tmp;
-        }else{
-            id = ((Integer)tmp).longValue();
+        if (tmp instanceof Long) {
+            id = (Long) tmp;
+        } else {
+            id = ((Integer) tmp).longValue();
         }
         return id;
     }
