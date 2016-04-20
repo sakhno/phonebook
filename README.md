@@ -1,0 +1,51 @@
+# phonebook
+<a href="http://phonebook-lardi.herokuapp.com/">Demo</a> - working demo using Postgresql, first app start can be long.
+<br>
+<br>
+Running on local server:<br><br>
+1) If **no params** will be passed to JVM, app will initialize with default JSON data store file "src/main/resources/phonebook.json".
+<br>
+<br>
+2) For running with **MySQL** pass to JVM -Dlardi.conf=your/local/path/filename.properties .<br>
+Example configuration:<br>
+profile=mysql<br>
+url=jdbc:mysql://localhost:3306/phonebook_antonsakhno?verifyServerCertificate=false&useSSL=false&requireSSL=false&characterEncoding=UTF-8 <br>
+username=username<br>
+password=password
+<br>
+<br>
+3) For running with your custom **JSON** file location set in configuration file:<br>
+profile=default<br>
+jsonpath=path to file<br>
+<br>
+<br>
+<br>
+MySQL script (located in src/main/resources/):<br>
+
+DROP SCHEMA IF EXISTS `phonebook_antonsakhno`;
+CREATE SCHEMA IF NOT EXISTS `phonebook_antonsakhno`
+  DEFAULT CHARACTER SET utf8;
+USE `phonebook`;
+
+CREATE TABLE IF NOT EXISTS `phonebook_antonsakhno`.`user` (
+  `id`       SERIAL PRIMARY KEY,
+  `login`    VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `name`     VARCHAR(45) NULL
+)
+  ENGINE = InnoDB
+  CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `phonebook_antonsakhno`.`contact` (
+  `id`          SERIAL PRIMARY KEY,
+  `lastname`    VARCHAR(45) NOT NULL,
+  `firstname`   VARCHAR(45) NOT NULL,
+  `middlename`  VARCHAR(45) NOT NULL,
+  `mobilephone` VARCHAR(45) NOT NULL,
+  `homephone`   VARCHAR(45) NULL,
+  `address`     VARCHAR(45) NULL,
+  `email`       VARCHAR(45) NULL,
+  `user_id`     INT REFERENCES users (id)
+)
+  ENGINE = InnoDB
+  CHARACTER SET = utf8;
