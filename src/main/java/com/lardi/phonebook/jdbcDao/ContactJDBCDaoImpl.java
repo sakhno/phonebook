@@ -24,7 +24,7 @@ import java.util.List;
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
  */
 @Repository
-@Profile("default")
+@Profile({"default","heroku"})
 public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
 
     private static final String CREATE_QUERY = "INSERT INTO contact (lastname, firstname, middlename, mobilephone, " +

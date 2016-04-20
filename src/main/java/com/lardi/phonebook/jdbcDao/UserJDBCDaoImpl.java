@@ -23,7 +23,7 @@ import java.util.List;
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
  */
 @Repository
-@Profile("default")
+@Profile({"default","heroku"})
 public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserJDBCDaoImpl.class);
     private static final String CREATE_QUERY = "INSERT INTO user (login, password, name) VALUES (?, ?, ?)";
