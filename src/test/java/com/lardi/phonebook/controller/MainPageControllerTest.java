@@ -1,9 +1,7 @@
 package com.lardi.phonebook.controller;
 
-import com.lardi.phonebook.PhonebookApplication;
 import com.lardi.phonebook.config.TestConfig;
 import com.lardi.phonebook.config.WebConfig;
-import com.lardi.phonebook.dao.PersistenceException;
 import com.lardi.phonebook.model.Contact;
 import com.lardi.phonebook.model.User;
 import com.lardi.phonebook.service.ContactService;
@@ -11,13 +9,9 @@ import com.lardi.phonebook.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -33,7 +27,6 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 /**
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
@@ -69,19 +62,19 @@ public class MainPageControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         Mockito.reset(userServiceMock, contactServiceMock);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         contacts = new ArrayList<>();
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             Contact contact = new Contact();
-            contact.setLastName(CONTACT_LAST_NAME+i);
-            contact.setFirstName(CONTACT_FIRST_NAME+i);
-            contact.setMiddleName(CONTACT_MIDDLE_NAME+i);
-            contact.setMobilePhone(CONTACT_MOBILE_PHONE+i);
-            contact.setHomePhone(CONTACT_HOME_PHONE+i);
-            contact.setAddress(CONTACT_ADDRESS+i);
-            contact.setEmail(i+CONTACT_EMAIL);
+            contact.setLastName(CONTACT_LAST_NAME + i);
+            contact.setFirstName(CONTACT_FIRST_NAME + i);
+            contact.setMiddleName(CONTACT_MIDDLE_NAME + i);
+            contact.setMobilePhone(CONTACT_MOBILE_PHONE + i);
+            contact.setHomePhone(CONTACT_HOME_PHONE + i);
+            contact.setAddress(CONTACT_ADDRESS + i);
+            contact.setEmail(i + CONTACT_EMAIL);
             contacts.add(contact);
         }
         user = new User();
@@ -93,7 +86,7 @@ public class MainPageControllerTest {
     }
 
     @Test
-    public void mainPageTest() throws Exception{
+    public void mainPageTest() throws Exception {
         when(userServiceMock.getUserByLogin(USER_LOGIN)).thenReturn(user);
         when(contactServiceMock.findAllUsersContacts(user)).thenReturn(contacts);
 

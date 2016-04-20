@@ -5,6 +5,7 @@ import com.lardi.phonebook.dao.PersistenceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class JacksonDaoSupport {
         }
     }
 
-    public void writeData(JsonPhonebookModel data) throws PersistenceException{
+    public void writeData(JsonPhonebookModel data) throws PersistenceException {
         sourceFile.delete();
         try {
             sourceFile.createNewFile();

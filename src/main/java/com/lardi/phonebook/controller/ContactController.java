@@ -34,7 +34,7 @@ public class ContactController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Contact getContact(@PathVariable long id){
+    public Contact getContact(@PathVariable long id) {
         Contact contact = null;
         try {
             contact = contactService.findContactById(id);
@@ -46,7 +46,7 @@ public class ContactController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<?> deleteContact(@PathVariable long id){
+    public ResponseEntity<?> deleteContact(@PathVariable long id) {
         try {
             contactService.delete(id);
         } catch (PersistenceException e) {
@@ -58,18 +58,19 @@ public class ContactController {
 
     /**
      * Validating contact
+     *
      * @return map with html element id as key and error message as value.
      */
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> verifyContact(@RequestParam Map<String, String> params, Principal principal){
+    public Map<String, String> verifyContact(@RequestParam Map<String, String> params, Principal principal) {
         Contact contact = parseContactFromRequest(params);
         Map<String, String> result = validationService.verifyContact(contact);
         return result;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Long> addContact(@RequestParam Map<String, String> params, Principal principal){
+    public ResponseEntity<Long> addContact(@RequestParam Map<String, String> params, Principal principal) {
         try {
             Contact contact = parseContactFromRequest(params);
             contact.setUser(userService.getUserByLogin(principal.getName()));
@@ -82,12 +83,12 @@ public class ContactController {
 
     }
 
-    private Contact parseContactFromRequest(Map<String,String> params){
+    private Contact parseContactFromRequest(Map<String, String> params) {
         Contact contact = new Contact();
         String contactId = params.get("id");
-        if("".equals(contactId)){
+        if ("".equals(contactId)) {
             contact.setId(0);
-        }else {
+        } else {
             contact.setId(Long.parseLong(params.get("id")));
         }
         contact.setLastName(params.get("lastname"));

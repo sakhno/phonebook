@@ -1,9 +1,7 @@
 package com.lardi.phonebook.controller;
 
-import com.lardi.phonebook.PhonebookApplication;
 import com.lardi.phonebook.config.TestConfig;
 import com.lardi.phonebook.config.WebConfig;
-import com.lardi.phonebook.model.Contact;
 import com.lardi.phonebook.model.User;
 import com.lardi.phonebook.service.UserService;
 import com.lardi.phonebook.service.ValidationService;
@@ -19,15 +17,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
 import java.util.HashMap;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
@@ -54,7 +49,7 @@ public class AuthControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         Mockito.reset(userServiceMock, validationServiceMock);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         user = new User();
@@ -64,7 +59,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void registrationTest() throws Exception{
+    public void registrationTest() throws Exception {
         when(validationServiceMock.verifyNewUser(user, USER_PASSWORD)).thenReturn(new HashMap<>());
         when(userServiceMock.save(user)).thenReturn(user);
 

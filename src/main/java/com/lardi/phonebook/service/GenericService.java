@@ -7,5 +7,6 @@ import com.lardi.phonebook.dao.PersistenceException;
  */
 public interface GenericService<T> {
     T save(T object) throws PersistenceException;
-    void delete (long id) throws PersistenceException;
+
+    void delete(long id) throws PersistenceException;
 }

@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User object) throws PersistenceException {
-        if(object.getId()==0){
+        if (object.getId() == 0) {
             object.setPassword(shaPasswordEncoder.encodePassword(object.getPassword(), null));
             return userDao.create(object);
-        }else {
+        } else {
             userDao.update(object);
             return object;
         }

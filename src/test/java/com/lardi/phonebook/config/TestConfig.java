@@ -18,17 +18,17 @@ import org.springframework.context.annotation.Profile;
 public class TestConfig {
 
     @Bean
-    public UserService userService(){
+    public UserService userService() {
         return Mockito.mock(UserService.class);
     }
 
     @Bean
-    public ContactService contactService(){
+    public ContactService contactService() {
         return Mockito.mock(ContactService.class);
     }
 
     @Bean
-    public ValidationService validationService(){
+    public ValidationService validationService() {
         return Mockito.mock(ValidationService.class);
     }
 }

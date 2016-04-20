@@ -21,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
 import java.nio.charset.Charset;
 import java.security.Principal;
 
@@ -28,7 +29,6 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
@@ -67,7 +67,7 @@ public class ContactControllerTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         Mockito.reset(userServiceMock, contactServiceMock, validationService);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         contact = new Contact();
@@ -87,7 +87,7 @@ public class ContactControllerTest {
     }
 
     @Test
-    public void getContactTest() throws Exception{
+    public void getContactTest() throws Exception {
         when(contactServiceMock.findContactById(1L)).thenReturn(contact);
         mockMvc.perform(get("/contact/{id}", 1L))
                 .andExpect(status().isOk())
@@ -109,32 +109,32 @@ public class ContactControllerTest {
     }
 
     @Test
-    public void deleteContactTest() throws Exception{
+    public void deleteContactTest() throws Exception {
         mockMvc.perform(delete("/contact/{id}", 1L))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteContactPersistanceExceptionTest() throws Exception{
+    public void deleteContactPersistanceExceptionTest() throws Exception {
         Mockito.doThrow(new PersistenceException("")).when(contactServiceMock).delete(1L);
         mockMvc.perform(delete("/contact/{id}", 1L))
                 .andExpect(status().isServiceUnavailable());
     }
 
     @Test
-    public void addContactTest() throws Exception{
+    public void addContactTest() throws Exception {
         when(userServiceMock.getUserByLogin(USER_LOGIN)).thenReturn(user);
         when(contactServiceMock.save(contact)).thenReturn(contact);
         mockMvc.perform(post("/contact")
-                    .principal(principal)
-                    .param("id", "")
-                    .param("lastname", CONTACT_LAST_NAME)
-                    .param("firstname", CONTACT_FIRST_NAME)
-                    .param("middlename", CONTACT_MIDDLE_NAME)
-                    .param("mobilephone", CONTACT_MOBILE_PHONE)
-                    .param("homephone", CONTACT_HOME_PHONE)
-                    .param("address", CONTACT_ADDRESS)
-                    .param("email", CONTACT_EMAIL))
+                .principal(principal)
+                .param("id", "")
+                .param("lastname", CONTACT_LAST_NAME)
+                .param("firstname", CONTACT_FIRST_NAME)
+                .param("middlename", CONTACT_MIDDLE_NAME)
+                .param("mobilephone", CONTACT_MOBILE_PHONE)
+                .param("homephone", CONTACT_HOME_PHONE)
+                .param("address", CONTACT_ADDRESS)
+                .param("email", CONTACT_EMAIL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(1)));
     }

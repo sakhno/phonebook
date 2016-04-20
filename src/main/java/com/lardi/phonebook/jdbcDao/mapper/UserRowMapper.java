@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
  */
 @Repository
-public class UserRowMapper implements RowMapper<User>{
+public class UserRowMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet resultSet, int i) throws SQLException {
         User user = new User();

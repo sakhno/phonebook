@@ -28,12 +28,12 @@ public class MainPageController {
 
 
     @RequestMapping("/")
-    public String index(){
+    public String index() {
         return "redirect:/home";
     }
 
     @RequestMapping("/home")
-    public String mainPage(Model model, Principal principal){
+    public String mainPage(Model model, Principal principal) {
         try {
             User currentUser = userService.getUserByLogin(principal.getName());
             List<Contact> userContacts = contactService.findAllUsersContacts(currentUser);

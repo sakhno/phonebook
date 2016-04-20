@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
  */
-public interface ContactService extends GenericService<Contact>{
+public interface ContactService extends GenericService<Contact> {
     List<Contact> findAllUsersContacts(User user) throws PersistenceException;
+
     Contact findContactById(long id) throws PersistenceException;
 }

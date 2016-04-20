@@ -25,9 +25,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/home"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                 <c:out value="${username}"/></a>
+                <c:out value="${username}"/></a>
         </div>
-        <div class="collapse navbar-collapse navbar-right" id="navbar" >
+        <div class="collapse navbar-collapse navbar-right" id="navbar">
             <ul class="nav navbar-nav">
                 <li><a href="/logout">Выход</a></li>
             </ul>

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
  */
 @Repository
-@Profile({"default","heroku"})
+@Profile({"mysql", "heroku"})
 public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserJDBCDaoImpl.class);
     private static final String CREATE_QUERY = "INSERT INTO users (login, password, name) VALUES (?, ?, ?)";
@@ -41,7 +42,7 @@ public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
     private RowMapper<User> userRowMapper;
 
     @PostConstruct
-    private void initializer(){
+    private void initializer() {
         setDataSource(dataSource);
     }
 
@@ -62,7 +63,7 @@ public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
     public User read(long id) throws PersistenceException {
         try {
             return getJdbcTemplate().queryForObject(READ_QUERY, new Object[]{id}, userRowMapper);
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
@@ -81,7 +82,7 @@ public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Override
     public void delete(long id) throws PersistenceException {
-        getJdbcTemplate().update(DELETE_QUERY+id);
+        getJdbcTemplate().update(DELETE_QUERY + id);
     }
 
     @Override
@@ -91,9 +92,9 @@ public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Override
     public User readBylogin(String login) throws PersistenceException {
-        try{
+        try {
             return getJdbcTemplate().queryForObject(READ_BY_LOGIN, new Object[]{login}, userRowMapper);
-        }catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }

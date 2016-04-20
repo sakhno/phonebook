@@ -11,5 +11,6 @@ import java.util.Map;
  */
 public interface ValidationService {
     Map<String, String> verifyNewUser(User user, String passwordConfirmation) throws PersistenceException;
+
     Map<String, String> verifyContact(Contact contact);
 }

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -24,7 +25,7 @@ import java.util.List;
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
  */
 @Repository
-@Profile({"default","heroku"})
+@Profile({"mysql", "heroku"})
 public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
 
     private static final String CREATE_QUERY = "INSERT INTO contact (lastname, firstname, middlename, mobilephone, " +
@@ -44,7 +45,7 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
     private RowMapper<Contact> contactRowMapper;
 
     @PostConstruct
-    private void initializer(){
+    private void initializer() {
         setDataSource(dataSource);
     }
 
@@ -59,9 +60,9 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
 
     @Override
     public Contact read(long id) throws PersistenceException {
-        try{
+        try {
             return getJdbcTemplate().queryForObject(READ_QUERY, new Object[]{id}, contactRowMapper);
-        }catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
@@ -77,7 +78,7 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
 
     @Override
     public void delete(long id) throws PersistenceException {
-        getJdbcTemplate().update(DELETE_QUERY+id);
+        getJdbcTemplate().update(DELETE_QUERY + id);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
         return getJdbcTemplate().query(READ_ALL_BY_USER, new Object[]{user.getId()}, contactRowMapper);
     }
 
-    private PreparedStatement makeBasePrepareStatment(String query, Contact contact, Connection connection) throws SQLException{
+    private PreparedStatement makeBasePrepareStatment(String query, Contact contact, Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, contact.getLastName());
         statement.setString(2, contact.getFirstName());

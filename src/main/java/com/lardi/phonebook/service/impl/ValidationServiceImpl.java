@@ -1,6 +1,5 @@
 package com.lardi.phonebook.service.impl;
 
-import com.lardi.phonebook.dao.ContactDao;
 import com.lardi.phonebook.dao.PersistenceException;
 import com.lardi.phonebook.dao.UserDao;
 import com.lardi.phonebook.model.Contact;
@@ -39,47 +38,47 @@ public class ValidationServiceImpl implements ValidationService {
     private UserDao userDao;
 
     @Override
-    public Map<String, String> verifyContact(Contact contact){
+    public Map<String, String> verifyContact(Contact contact) {
         Map<String, String> result = new HashMap<>();
-        if(contact.getLastName().length()<4){
+        if (contact.getLastName().length() < 4) {
             result.put("lastname", LESS_THEN_4);
         }
-        if(contact.getFirstName().length()<4){
+        if (contact.getFirstName().length() < 4) {
             result.put("firstname", LESS_THEN_4);
         }
-        if(contact.getMiddleName().length()<4){
+        if (contact.getMiddleName().length() < 4) {
             result.put("middlename", LESS_THEN_4);
         }
-        if("".equals(contact.getMobilePhone())){
+        if ("".equals(contact.getMobilePhone())) {
             result.put("mobilephone", REJECT_EMPTY);
-        }else if(!validate(MOBILE_PATTERN, contact.getMobilePhone())){
+        } else if (!validate(MOBILE_PATTERN, contact.getMobilePhone())) {
             result.put("mobilephone", MOBILE_PHONE_FORMAT);
         }
 
-        if(!"".equals(contact.getHomePhone())&&!validate(MOBILE_PATTERN, contact.getHomePhone())){
+        if (!"".equals(contact.getHomePhone()) && !validate(MOBILE_PATTERN, contact.getHomePhone())) {
             result.put("homephone", MOBILE_PHONE_FORMAT);
         }
-        if(!"".equals(contact.getEmail())&&!validate(EMAIL_PATTERN, contact.getEmail())){
+        if (!"".equals(contact.getEmail()) && !validate(EMAIL_PATTERN, contact.getEmail())) {
             result.put("email", EMAIL_FORMAT);
         }
         return result;
     }
 
     @Override
-    public Map<String, String> verifyNewUser(User user, String passwordConfirmation) throws PersistenceException{
+    public Map<String, String> verifyNewUser(User user, String passwordConfirmation) throws PersistenceException {
         Map<String, String> result = new HashMap<>();
-        if (user.getName().length()<5){
+        if (user.getName().length() < 5) {
             result.put("name", LESS_THEN_5);
         }
-        if(!validate(LOGIN_PATTERN, user.getLogin())){
+        if (!validate(LOGIN_PATTERN, user.getLogin())) {
             result.put("login", LOGIN_REQUIREMENTS);
-        }else if(userDao.readBylogin(user.getLogin())!=null){
+        } else if (userDao.readBylogin(user.getLogin()) != null) {
             result.put("login", LOGIN_EXISTS);
         }
-        if (user.getPassword().length()<5){
+        if (user.getPassword().length() < 5) {
             result.put("password", LESS_THEN_5);
         }
-        if (!user.getPassword().equals(passwordConfirmation)){
+        if (!user.getPassword().equals(passwordConfirmation)) {
             result.put("passwordconfirmation", PASSWORDS_DONT_MATCH);
         }
         return result;

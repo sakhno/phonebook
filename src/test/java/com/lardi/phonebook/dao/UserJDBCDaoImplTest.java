@@ -14,10 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Anton Sakhno <antonsakhno.work@gmail.com>
@@ -25,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = PhonebookApplication.class)
 @WebAppConfiguration
-@ActiveProfiles("jsonstore")
+@ActiveProfiles("default")
 public class UserJDBCDaoImplTest {
     private static final Logger LOGGER = LogManager.getLogger(UserJDBCDaoImplTest.class);
     private static final String USER_LOGIN = "testlogin";
@@ -37,7 +34,7 @@ public class UserJDBCDaoImplTest {
     private UserDao userDao;
 
     @Test
-    public void createUpdateDeleteTest(){
+    public void createUpdateDeleteTest() {
         User user = new User();
         user.setLogin(USER_LOGIN);
         user.setName(USER_NAME);
@@ -59,7 +56,7 @@ public class UserJDBCDaoImplTest {
 
             //read all users
             List<User> allUsers = userDao.readAll();
-            assertTrue(allUsers!=null&&allUsers.size()>0);
+            assertTrue(allUsers != null && allUsers.size() > 0);
 
             //read user by login
             assertNotNull(userDao.readBylogin(USER_LOGIN_CHANGED));

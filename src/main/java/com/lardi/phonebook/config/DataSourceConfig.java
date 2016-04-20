@@ -3,7 +3,6 @@ package com.lardi.phonebook.config;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -19,19 +18,8 @@ import java.net.URISyntaxException;
 public class DataSourceConfig {
     private static final Logger LOGGER = LogManager.getLogger(DataSourceConfig.class);
 
-//    @Value("${spring.datasource.driver-class-name}")
-//    private String driver;
-//    @Value("${spring.datasource.url}")
-//    private String url;
-//    @Value("${spring.datasource.username}")
-//    private String username;
-//    @Value("${spring.datasource.password}")
-//    private String password;
-
-
-
     @Bean
-    @Profile("default")
+    @Profile("mysql")
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -46,7 +34,7 @@ public class DataSourceConfig {
 
     @Bean
     @Profile("heroku")
-    public DataSource herokuDataSource(){
+    public DataSource herokuDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         URI dbUri = null;
         try {
@@ -62,5 +50,11 @@ public class DataSourceConfig {
         dataSource.setMaxTotal(70);
         dataSource.setMaxIdle(30);
         return dataSource;
+    }
+
+    @Bean
+    @Profile("default")
+    public DataSource emptyDataSource() {
+        return new BasicDataSource();
     }
 }

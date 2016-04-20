@@ -5,7 +5,7 @@ $(document).on("submit", "#registration", function (event) {
     var $form = $(this);
     $.ajax({
         type: "POST",
-        url:"/registration",
+        url: "/registration",
         data: $form.serialize(),
         success: function () {
             window.location.href = '/registration/success';
