@@ -36,16 +36,14 @@ public class PhonebookApplication {
 			System.setProperty((String)entry.getKey(), (String)entry.getValue());
 		}
 		String profile = properties.getProperty("profile");
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-		context.getEnvironment().setActiveProfiles(profile);
-		context.refresh();
-		switch (profile){
-			case "default":
+		if(profile!=null){
+			AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+			context.getEnvironment().setActiveProfiles(profile);
+			context.refresh();
+			if(profile.equals("default")){
 				System.setProperty("GENERATED_KEY_NAME", "GENERATED_KEY");
-				break;
-			case "heroku":
-				System.setProperty("GENERATED_KEY_NAME", "id");
-				break;
+			}
 		}
+		System.setProperty("GENERATED_KEY_NAME", "id");
 	}
 }
