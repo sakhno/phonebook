@@ -26,12 +26,12 @@ import java.util.List;
 @Profile({"default","heroku"})
 public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserJDBCDaoImpl.class);
-    private static final String CREATE_QUERY = "INSERT INTO user (login, password, name) VALUES (?, ?, ?)";
-    private static final String READ_QUERY = "SELECT * FROM user WHERE id = ?";
-    private static final String UPDATE_QUERY = "UPDATE user SET login = ?, password = ?, name = ? WHERE id = ?";
-    private static final String DELETE_QUERY = "DELETE FROM user WHERE id = ";
-    private static final String READ_ALL_QUERY = "SELECT * FROM user";
-    private static final String READ_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
+    private static final String CREATE_QUERY = "INSERT INTO users (login, password, name) VALUES (?, ?, ?)";
+    private static final String READ_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String UPDATE_QUERY = "UPDATE users SET login = ?, password = ?, name = ? WHERE id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ";
+    private static final String READ_ALL_QUERY = "SELECT * FROM users";
+    private static final String READ_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
 
     @Autowired
     private DataSource dataSource;
