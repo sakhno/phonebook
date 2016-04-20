@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar  target/phonebook-0.0.1-SNAPSHOT.war --spring.config.location=phonebook-heroku.properties
