@@ -35,6 +35,7 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
     private static final String DELETE_QUERY = "DELETE FROM contact WHERE id = ";
     private static final String READ_ALL_QUERY = "SELECT * FROM contact";
     private static final String READ_ALL_BY_USER = "SELECT * FROM contact WHERE user_id = ?";
+    private static final String GENERATED_KEY_NAME = System.getProperty("GENERATED_KEY_NAME");
 
     @Autowired
     private DataSource dataSource;
@@ -53,7 +54,7 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
         getJdbcTemplate().update(connection -> {
             return makeBasePrepareStatment(CREATE_QUERY, object, connection);
         }, holder);
-        return read((Long) holder.getKeys().get("GENERATED_KEY"));
+        return read((Long) holder.getKeys().get(GENERATED_KEY_NAME));
     }
 
     @Override

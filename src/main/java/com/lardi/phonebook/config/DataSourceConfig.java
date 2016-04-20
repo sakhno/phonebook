@@ -19,14 +19,14 @@ import java.net.URISyntaxException;
 public class DataSourceConfig {
     private static final Logger LOGGER = LogManager.getLogger(DataSourceConfig.class);
 
-    @Value("${spring.datasource.driver-class-name}")
-    private String driver;
-    @Value("${spring.datasource.url}")
-    private String url;
-    @Value("${spring.datasource.username}")
-    private String username;
-    @Value("${spring.datasource.password}")
-    private String password;
+//    @Value("${spring.datasource.driver-class-name}")
+//    private String driver;
+//    @Value("${spring.datasource.url}")
+//    private String url;
+//    @Value("${spring.datasource.username}")
+//    private String username;
+//    @Value("${spring.datasource.password}")
+//    private String password;
 
 
 
@@ -34,10 +34,10 @@ public class DataSourceConfig {
     @Profile("default")
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUrl(url);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl(System.getProperty("url"));
+        dataSource.setUsername(System.getProperty("username"));
+        dataSource.setPassword(System.getProperty("password"));
         dataSource.setInitialSize(10);
         dataSource.setMaxTotal(70);
         dataSource.setMaxIdle(30);
