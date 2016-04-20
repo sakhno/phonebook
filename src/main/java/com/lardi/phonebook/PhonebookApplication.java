@@ -21,6 +21,13 @@ public class PhonebookApplication {
 
 	private static void systemVariablesSetUp(){
 		String path = System.getProperty("lardi.conf");
+		//if no config file - set variable for heroku postgres and axit method
+		if(path!=null){
+			System.setProperty("GENERATED_KEY_NAME", "id");
+			return;
+		}
+
+		//reading properties from config file
 		Properties properties = new Properties();
 		InputStream stream = null;
 		try {
@@ -32,9 +39,12 @@ public class PhonebookApplication {
 			LOGGER.info(e);
 		}
 
+		//setting config properties as system variables
 		for(Map.Entry<Object, Object> entry: properties.entrySet()){
 			System.setProperty((String)entry.getKey(), (String)entry.getValue());
 		}
+
+		//setting spring profile from properties
 		String profile = properties.getProperty("profile");
 		if(profile!=null){
 			AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -44,6 +54,5 @@ public class PhonebookApplication {
 				System.setProperty("GENERATED_KEY_NAME", "GENERATED_KEY");
 			}
 		}
-		System.setProperty("GENERATED_KEY_NAME", "id");
 	}
 }
