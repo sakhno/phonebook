@@ -9,13 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -25,7 +21,7 @@ import java.util.List;
  */
 @Repository
 @Profile({"mysql", "heroku"})
-public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
+public class UserJDBCDaoImpl extends GeneralJDBCDao implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserJDBCDaoImpl.class);
     private static final String CREATE_QUERY = "INSERT INTO users (login, password, name) VALUES (?, ?, ?)";
     private static final String READ_QUERY = "SELECT * FROM users WHERE id = ?";
@@ -36,15 +32,7 @@ public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
     private static final String GENERATED_KEY_NAME = System.getProperty("GENERATED_KEY_NAME");
 
     @Autowired
-    private DataSource dataSource;
-
-    @Autowired
     private RowMapper<User> userRowMapper;
-
-    @PostConstruct
-    private void initializer() {
-        setDataSource(dataSource);
-    }
 
     @Override
     public User create(User object) throws PersistenceException {
@@ -56,7 +44,7 @@ public class UserJDBCDaoImpl extends JdbcDaoSupport implements UserDao {
             statement.setString(3, object.getName());
             return statement;
         }, holder);
-        return read((Long) holder.getKeys().get(GENERATED_KEY_NAME));
+        return read(parseLongFromHolder(holder));
     }
 
     @Override

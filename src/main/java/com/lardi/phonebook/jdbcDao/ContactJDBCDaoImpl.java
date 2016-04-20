@@ -8,13 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -26,7 +22,7 @@ import java.util.List;
  */
 @Repository
 @Profile({"mysql", "heroku"})
-public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
+public class ContactJDBCDaoImpl extends GeneralJDBCDao implements ContactDao {
 
     private static final String CREATE_QUERY = "INSERT INTO contact (lastname, firstname, middlename, mobilephone, " +
             "homephone, address, email, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -36,18 +32,9 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
     private static final String DELETE_QUERY = "DELETE FROM contact WHERE id = ";
     private static final String READ_ALL_QUERY = "SELECT * FROM contact";
     private static final String READ_ALL_BY_USER = "SELECT * FROM contact WHERE user_id = ?";
-    private static final String GENERATED_KEY_NAME = System.getProperty("GENERATED_KEY_NAME");
-
-    @Autowired
-    private DataSource dataSource;
 
     @Autowired
     private RowMapper<Contact> contactRowMapper;
-
-    @PostConstruct
-    private void initializer() {
-        setDataSource(dataSource);
-    }
 
     @Override
     public Contact create(Contact object) throws PersistenceException {
@@ -55,7 +42,8 @@ public class ContactJDBCDaoImpl extends JdbcDaoSupport implements ContactDao {
         getJdbcTemplate().update(connection -> {
             return makeBasePrepareStatment(CREATE_QUERY, object, connection);
         }, holder);
-        return read((Long) holder.getKeys().get(GENERATED_KEY_NAME));
+
+        return read(parseLongFromHolder(holder));
     }
 
     @Override
