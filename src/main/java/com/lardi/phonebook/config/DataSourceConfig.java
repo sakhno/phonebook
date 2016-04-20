@@ -31,6 +31,7 @@ public class DataSourceConfig {
 
 
     @Bean
+    @Profile("default")
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(driver);
