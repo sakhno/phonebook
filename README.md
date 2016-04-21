@@ -1,5 +1,5 @@
 # phonebook
-<a href="http://phonebook-lardi.herokuapp.com/">Demo</a> - working demo using Postgresql, first app start can be long.
+<a href="http://phonebook-lardi.herokuapp.com/">Demo</a> - working demo deployed to heroku, first app start can be long.
 <br>
 <br>
 Running on local server:<br><br>
