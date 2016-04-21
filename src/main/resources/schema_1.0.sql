@@ -7,13 +7,13 @@ DROP SCHEMA IF EXISTS `phonebook_antonsakhno`;
 -- Schema phonebook
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `phonebook_antonsakhno`
-  DEFAULT CHARACTER SET utf8;
+DEFAULT CHARACTER SET utf8;
 USE `phonebook`;
 
 -- -----------------------------------------------------
 -- Table `phonebook`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `phonebook_antonsakhno`.`user` (
+CREATE TABLE IF NOT EXISTS `phonebook_antonsakhno`.`users` (
   `id`       SERIAL PRIMARY KEY,
   `login`    VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,

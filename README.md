@@ -25,9 +25,9 @@ MySQL script (located in src/main/resources/):<br>
 DROP SCHEMA IF EXISTS `phonebook_antonsakhno`;<br>
 CREATE SCHEMA IF NOT EXISTS `phonebook_antonsakhno`<br>
   DEFAULT CHARACTER SET utf8;<br>
-USE `phonebook`;<br>
+USE `phonebook_antonsakhno`;<br>
 <br>
-CREATE TABLE IF NOT EXISTS `phonebook_antonsakhno`.`user` (<br>
+CREATE TABLE IF NOT EXISTS `phonebook_antonsakhno`.`users` (<br>
   `id`       SERIAL PRIMARY KEY,<br>
   `login`    VARCHAR(45) NOT NULL,<br>
   `password` VARCHAR(45) NOT NULL,<br>
