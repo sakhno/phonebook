@@ -8,15 +8,15 @@ Running on local server:<br><br>
 <br>
 2) For running with **MySQL** pass to JVM -Dlardi.conf=your/local/path/filename.properties .<br>
 Example configuration:<br>
-profile=mysql<br>
-url=jdbc:mysql://localhost:3306/phonebook_antonsakhno?verifyServerCertificate=false&useSSL=false&requireSSL=false&characterEncoding=UTF-8 <br>
-username=username<br>
-password=password
+_profile_=mysql<br>
+_url_=jdbc:mysql://localhost:3306/phonebook_antonsakhno?verifyServerCertificate=false&useSSL=false&requireSSL=false&characterEncoding=UTF-8 <br>
+_username_=username<br>
+_password_=password
 <br>
 <br>
 3) For running with your custom **JSON** file location set in configuration file:<br>
-profile=default<br>
-jsonpath=path to file<br>
+_profile_=default<br>
+_jsonpath_=path to file<br>
 <br>
 <br>
 <br>
