@@ -3,7 +3,7 @@
 <br>
 <br>
 **Used technologies:**<br>
-**Back-end:** Spring Framework(Boot, IoC, MVC, Security, JDBC Template), JSP/JSTL, REST, Jackson, Maven, JUnit, Mockito, MySQL, PostgreSQL(для демо на heroku).<br>
+**Back-end:** Spring Framework(Boot, IoC, MVC, Security, JDBC Template), JSP/JSTL, REST, Jackson, Maven, JUnit, Mockito, MySQL, PostgreSQL(for heroku demo).<br>
 **Front-end:** Bootstrap, JQuery,  AJAX, Datatables(JQuery plugin).<br><br>
 Running on local server:<br><br>
 1) If **no params** will be passed to JVM, app will initialize with default JSON data store file "src/main/resources/phonebook.json".
