@@ -9,15 +9,28 @@ $(document).ready(function () {
             "targets": [2],
             "visible": false,
             "searchable": false
-        }]
+        }],
+        "createdRow" : function( row, data, index ) {
+            if (data.hasOwnProperty("id")) {
+                row.id = "row_" + data.id;
+            }
+        }
     });
+
+    table.row()
 
     //retriving contact from db and filling form
     $('#contacttable tbody').on('click', 'tr', function () {
+        editContact(this);
+    });
+
+    var editContact = function (row) {
+        table.$('tr.selected').removeClass('selected');
+        $(row).addClass('selected');
         resetEditForm();
         $('#deletecontactbutton').parent().removeClass().addClass('col-sm-6').show();
         $('#submitbutton').parent().removeClass().addClass('col-sm-6');
-        var data = table.row(this).data();
+        var data = table.row(row).data();
         $.get("/contact/" + data[2], function (response) {
             $('#contactformwindow').show();
             $('#formlabel').text("Редактирование контакта");
@@ -30,7 +43,7 @@ $(document).ready(function () {
             $('#email').val(response.email);
             $('#id').val(response.id);
         });
-    });
+    };
 
     //verifying contact and saving to db
     $(document).on('submit', '#contactform', function (event) {
@@ -54,7 +67,6 @@ $(document).ready(function () {
                     updateContactTable(newContact);
                 });
                 resetEditForm();
-                $('#success').show();
             }
         });
         event.preventDefault();
@@ -73,7 +85,7 @@ $(document).ready(function () {
         $('#contactform').trigger('reset');
         $('#id').val(0);
         $('#formlabel').text("Добавление нового контакта");
-    }
+    };
 
     //deleting contact from db and updating view
     $(document).on('click', '#deletecontactbutton', function () {
@@ -94,18 +106,19 @@ $(document).ready(function () {
 
     //updating existing table within saved to db contact, true if new contact, false if after editing existing
     var updateContactTable = function (newContact) {
-        var $contactId = $("#id").val();
-        var $contactName = $("#lastname").val() + " " + $("#firstname").val();
-        var $contactPhone = $("#mobilephone").val();
+        var contactId = $("#id").val();
+        var contactName = $("#lastname").val() + " " + $("#firstname").val();
+        var contactPhone = $("#mobilephone").val();
         if (newContact) {
-            var $newRow = table.row.add([
-                $contactName,
-                $contactPhone,
-                $contactId
-            ]).draw();
+            var data = [contactName, contactPhone, contactId];
+            data.id = contactId;
+            var row = table.row.add(data).draw().node();
+            editContact(row);
+            $('#success').show();
         } else {
-            $('#contactname_' + $contactId).html($contactName);
-            $('#contactphone_' + $contactId).html($contactPhone);
+            $('#row_' + contactId).find('td:eq(0)').html(contactName);
+            $('#row_' + contactId).find('td:eq(1)').html(contactPhone);
+            $('#success').show();
         }
     };
 
