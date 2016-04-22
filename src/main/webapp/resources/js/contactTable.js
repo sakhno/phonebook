@@ -17,8 +17,6 @@ $(document).ready(function () {
         }
     });
 
-    table.row()
-
     //retriving contact from db and filling form
     $('#contacttable tbody').on('click', 'tr', function () {
         editContact(this);
@@ -114,12 +112,11 @@ $(document).ready(function () {
             data.id = contactId;
             var row = table.row.add(data).draw().node();
             editContact(row);
-            $('#success').show();
         } else {
             $('#row_' + contactId).find('td:eq(0)').html(contactName);
             $('#row_' + contactId).find('td:eq(1)').html(contactPhone);
-            $('#success').show();
         }
+        $('#success').show();
     };
 
     var resetEditForm = function () {
